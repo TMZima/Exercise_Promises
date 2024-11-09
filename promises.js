@@ -1,5 +1,19 @@
 // Part 1: Number Facts
+
 // 1. Make a request to the Numbers API http://numbersapi.com/ to get a fact about your favorite number. (Make sure you get back JSON by including the json query key, specific to this API.
+
+let favNum = 7;
+let baseURL = "http://numbersapi.com/";
+
+async function getFavNumFact() {
+  // Initialize a variable to store the response from the fetch request. Using await will pause the execution of the function until the promise is resolved.
+  let res = await fetch(`${baseURL}${favNum}?json`);
+  // Initialize a variable to store the JSON data from the response. Using await will pause the execution of the function until the promise is resolved.
+  let data = await res.json();
+  // Log the text property of the data object to the console.
+  console.log(data.text);
+}
+
 // 2. Figure out how to get data on multiple numbers in a single request. Make that request and when you get the data back, put all of the number facts on the page.
 // 3. Use the API to get 4 facts on your favorite number. Once you have them all, put them on the page. It's okay if some of the facts are repeats. Note: You'll need to make multiple requests for this.
 
