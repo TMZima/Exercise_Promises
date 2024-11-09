@@ -2,19 +2,32 @@
 
 // 1. Make a request to the Numbers API http://numbersapi.com/ to get a fact about your favorite number. (Make sure you get back JSON by including the json query key, specific to this API.
 
-let favNum = 7;
+let favNum = [7, 14, 21]; // Example array of favorite numbers
 let baseURL = "http://numbersapi.com/";
 
+// Using async and await. async function is used to define an asynchronous function that returns a promise. The await keyword is used to pause the execution of the async function and wait for the promise to resolve prior to moving on.
 async function getFavNumFact() {
   // Initialize a variable to store the response from the fetch request. Using await will pause the execution of the function until the promise is resolved.
   let res = await fetch(`${baseURL}${favNum}?json`);
-  // Initialize a variable to store the JSON data from the response. Using await will pause the execution of the function until the promise is resolved.
+  // Initialize a variable to store the JSON data from the response.
   let data = await res.json();
   // Log the text property of the data object to the console.
   console.log(data.text);
 }
 
 // 2. Figure out how to get data on multiple numbers in a single request. Make that request and when you get the data back, put all of the number facts on the page.
+
+async function getMultipleNumFacts() {
+  // Initialize a variable to store the response from the fetch request. Using await will pause the execution of the function until the promise is resolved.
+  let res = await fetch(`${baseURL}${favNum.join(",")}?json`);
+  // Initialize a variable to store the JSON data from the response.
+  let data = await res.json();
+  // Iterate over the data object and log each fact to the console.
+  for (let num in data) {
+    console.log(data[num]);
+  }
+}
+
 // 3. Use the API to get 4 facts on your favorite number. Once you have them all, put them on the page. It's okay if some of the facts are repeats. Note: You'll need to make multiple requests for this.
 
 // Part 2: Deck of Cards
