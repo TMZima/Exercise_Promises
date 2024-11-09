@@ -7,12 +7,18 @@ const baseURL = "http://numbersapi.com/";
 
 // Using async and await. async function is used to define an asynchronous function that returns a promise. The await keyword is used to pause the execution of the async function and wait for the promise to resolve prior to moving on.
 async function getFavNumFact() {
-  // Initialize a variable to store the response from the fetch request. Using await will pause the execution of the function until the promise is resolved.
-  let res = await fetch(`${baseURL}${favNum}?json`);
-  // Initialize a variable to store the JSON data from the response.
-  let data = await res.json();
-  // Log the text property of the data object to the console.
-  console.log(data.text);
+  // To catch errors, use a try/catch block. If an error occurs, the catch block will run and the error will be logged to the console.
+  try {
+    // Initialize a variable to store the response from the fetch request. Using await will pause the execution of the function until the promise is resolved.
+    let res = await fetch(`${baseURL}${favNum}?json`);
+    // Initialize a variable to store the JSON data from the response.
+    let data = await res.json();
+    // Log the text property of the data object to the console.
+    console.log(data.text);
+  } catch (err) {
+    // Catch any errors that occur during the fetch request and log them to the console.
+    console.error("Error fetching favorite number fact:", err);
+  }
 }
 // To call this function, use the following code:
 // getFavNumFact(); Note: favNum is a global variable and this function only accepts one number.
@@ -20,13 +26,17 @@ async function getFavNumFact() {
 // 2. Figure out how to get data on multiple numbers in a single request. Make that request and when you get the data back, put all of the number facts on the page.
 
 async function getMultipleNumFacts() {
-  // Initialize a variable to store the response from the fetch request. Using await will pause the execution of the function until the promise is resolved.
-  let res = await fetch(`${baseURL}${favNum.join(",")}?json`);
-  // Initialize a variable to store the JSON data from the response.
-  let data = await res.json();
-  // Iterate over the data object and log each fact to the console.
-  for (let num in data) {
-    console.log(data[num]);
+  try {
+    // Initialize a variable to store the response from the fetch request. Using await will pause the execution of the function until the promise is resolved.
+    let res = await fetch(`${baseURL}${favNum.join(",")}?json`);
+    // Initialize a variable to store the JSON data from the response.
+    let data = await res.json();
+    // Iterate over the data object and log each fact to the console.
+    for (let num in data) {
+      console.log(data[num]);
+    }
+  } catch (err) {
+    console.error("Error fetching multiple number facts:", err);
   }
 }
 // To call this function, use the following code:
@@ -35,24 +45,28 @@ async function getMultipleNumFacts() {
 // 3. Use the API to get 4 facts on your favorite number. Once you have them all, put them on the page. It's okay if some of the facts are repeats. Note: You'll need to make multiple requests for this.
 
 async function getMultipleFacts() {
-  // Initialize a variable to store the response from the fetch request.
-  // Use Promise.all to make multiple requests and wait for all of them to resolve before moving on.
-  let res = await Promise.all(
-    // Array.from() is used here to create an array of 4 fetch requests.
-    Array.from({ length: 4 }, () => {
-      // Return a fetch request for each favorite number.
-      return fetch(`${baseURL}${favNum}?json`);
-    })
-  );
-  // Initialize a variable to store the JSON data from the response.
-  // Use Promise.all to wait for all of the JSON data to be resolved before moving on.
-  // The map() method is used to iterate over the array of responses and return an array of JSON data.
-  let data = await Promise.all(res.map((res) => res.json()));
-  // Iterate over the data object and log each fact to the console.
-  // Use forEach() to iterate over the array of JSON data and log the text property of each object to the console.
-  data.forEach((data) => {
-    console.log(data.text);
-  });
+  try {
+    // Initialize a variable to store the response from the fetch request.
+    // Use Promise.all to make multiple requests and wait for all of them to resolve before moving on.
+    let res = await Promise.all(
+      // Array.from() is used here to create an array of 4 fetch requests.
+      Array.from({ length: 4 }, () => {
+        // Return a fetch request for each favorite number.
+        return fetch(`${baseURL}${favNum}?json`);
+      })
+    );
+    // Initialize a variable to store the JSON data from the response.
+    // Use Promise.all to wait for all of the JSON data to be resolved before moving on.
+    // The map() method is used to iterate over the array of responses and return an array of JSON data.
+    let data = await Promise.all(res.map((res) => res.json()));
+    // Iterate over the data object and log each fact to the console.
+    // Use forEach() to iterate over the array of JSON data and log the text property of each object to the console.
+    data.forEach((data) => {
+      console.log(data.text);
+    });
+  } catch (err) {
+    console.error("Error fetching multiple facts of favorite number:", err);
+  }
 }
 // To call this function, use the following code:
 // getMultipleFacts(); Note: favNum is a global variable and this function only accepts one number.
@@ -63,15 +77,46 @@ async function getMultipleFacts() {
 const deckURL = "https://deckofcardsapi.com/api/deck/new/draw/?count=1";
 
 async function getCard() {
-  // Initialize a variable to store the response from the fetch request.
-  let result = await fetch(`${deckURL}`);
-  // Initialize a variable to store the JSON data from the response.
-  let data = await result.json();
-  // Log the value and suit of the card to the console.
-  console.log(`${data.cards[0].value} of ${data.cards[0].suit}`);
+  try {
+    // Initialize a variable to store the response from the fetch request.
+    let result = await fetch(`${deckURL}`);
+    // Initialize a variable to store the JSON data from the response.
+    let data = await result.json();
+    // Log the value and suit of the card to the console.
+    console.log(`${data.cards[0].value} of ${data.cards[0].suit}`);
+  } catch (err) {
+    console.error("Error fetching card:", err);
+  }
 }
+// To call this function, use the following code:
+// getCard(); Note: This function only fetches one card. To fetch multiple cards, use the following function.
 
 // 2. Make a request to the deck of cards API to request a single card from a newly shuffled deck. Once you have the card, make a request to the same API to get one more card from the same deck. Once you have both cards, console.log the values and suits of both cards.
+
+async function getTwoCards() {
+  try {
+    // Initialize a variable to store the response from the fetch request.
+    let result = await fetch(`${deckURL}`);
+    // Initialize a variable to store the JSON data from the response.
+    let data = await result.json();
+    // Initialize a variable to store the deck ID from the data object.
+    let deckId = data.deck_id;
+    // Initialize a variable to store the response from the fetch request.
+    let result2 = await fetch(
+      `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`
+    );
+    // Initialize a variable to store the JSON data from the response.
+    let data2 = await result2.json();
+    // Log the values and suits of both cards to the console.
+    console.log(`${data.cards[0].value} of ${data.cards[0].suit}`);
+    console.log(`${data2.cards[0].value} of ${data2.cards[0].suit}`);
+  } catch (err) {
+    console.error("Error fetching two cards:", err);
+  }
+}
+// To call this function, use the following code:
+// getTwoCards(); Note: This function only fetches two cards.
+
 // 3. Build an HTML page that lets you draw cards from a deck. When the page loads, go to the Deck of Cards API to create a new deck, and show a button on the page that will let you draw a card. Every time you click the button, display a new card, until there are no cards left in the deck.
 
 // Further Study
