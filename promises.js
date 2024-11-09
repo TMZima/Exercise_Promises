@@ -2,7 +2,7 @@
 
 // 1. Make a request to the Numbers API http://numbersapi.com/ to get a fact about your favorite number. (Make sure you get back JSON by including the json query key, specific to this API.
 
-let favNum = [7, 14, 21]; // Example array of favorite numbers
+let favNum = 7;
 let baseURL = "http://numbersapi.com/";
 
 // Using async and await. async function is used to define an asynchronous function that returns a promise. The await keyword is used to pause the execution of the async function and wait for the promise to resolve prior to moving on.
@@ -14,6 +14,8 @@ async function getFavNumFact() {
   // Log the text property of the data object to the console.
   console.log(data.text);
 }
+// To call this function, use the following code:
+// getFavNumFact(); Note: favNum is a global variable and this function only accepts one number.
 
 // 2. Figure out how to get data on multiple numbers in a single request. Make that request and when you get the data back, put all of the number facts on the page.
 
@@ -27,8 +29,33 @@ async function getMultipleNumFacts() {
     console.log(data[num]);
   }
 }
+// To call this function, use the following code:
+// getMultipleNumFacts(); Note: favNum is an array of numbers and this function only accepts multiple numbers.
 
 // 3. Use the API to get 4 facts on your favorite number. Once you have them all, put them on the page. It's okay if some of the facts are repeats. Note: You'll need to make multiple requests for this.
+
+async function getMultipleFacts() {
+  // Initialize a variable to store the response from the fetch request.
+  // Use Promise.all to make multiple requests and wait for all of them to resolve before moving on.
+  let res = await Promise.all(
+    // Array.from() is used here to create an array of 4 fetch requests.
+    Array.from({ length: 4 }, () => {
+      // Return a fetch request for each favorite number.
+      return fetch(`${baseURL}${favNum}?json`);
+    })
+  );
+  // Initialize a variable to store the JSON data from the response.
+  // Use Promise.all to wait for all of the JSON data to be resolved before moving on.
+  // The map() method is used to iterate over the array of responses and return an array of JSON data.
+  let data = await Promise.all(res.map((res) => res.json()));
+  // Iterate over the data object and log each fact to the console.
+  // Use forEach() to iterate over the array of JSON data and log the text property of each object to the console.
+  data.forEach((data) => {
+    console.log(data.text);
+  });
+}
+// To call this function, use the following code:
+// getMultipleFacts(); Note: favNum is a global variable and this function only accepts one number.
 
 // Part 2: Deck of Cards
 // 1. Make a request to the Deck of Cards API to request a single card from a newly shuffled deck. Once you have the card, console.log the value and suit of the card (e.g. "5 of spades", "queen of diamonds"). https://deckofcardsapi.com/
