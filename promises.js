@@ -117,7 +117,7 @@ async function getTwoCards() {
 // To call this function, use the following code:
 // getTwoCards(); Note: This function only fetches two cards.
 
-// 3. Build an HTML page that lets you draw cards from a deck. When the page loads, go to the Deck of Cards API to create a new deck, and show a button on the page that will let you draw a card. Every time you click the button, display a new card, until there are no cards left in the deck.
+// Created new "cardDraw.js" file and moved the above code to that file.
 
 // Further Study
 // 1. Figure out how to make a single request to the Pokemon API to get names and URLs for every pokemon in the database.
