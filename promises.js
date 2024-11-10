@@ -119,7 +119,7 @@ async function getTwoCards() {
 
 // Created new "cardDraw.js" file and moved the above code to that file.
 
-// Further Study
+// Further Study (Optional) - Created new "pokemon.js" file and moved the below code to that file.
 // 1. Figure out how to make a single request to the Pokemon API to get names and URLs for every pokemon in the database.
 // 2. Once you have names and URLs for all the pokemon, pick three at random and make requests to their URLs. Once those requests are complete, console.log the data for each pokemon.
 // 3. Start with your code from 2, but instead of logging the data on each random pokemon, store the name of the pokemon in a variable and then make another request, this time to that pokemon's species URL (you should see a key of species in the data). Once that request comes back, look in the flavor_text_entries key of the response data for a description of the species written in English. If you find one, console.log the name of the pokemon along with the description you found. Example, "ducklett: They are better at swimming than flying, and they happily eat their favorite food, peat moss, as they dive underwater."
